@@ -36,11 +36,10 @@ const ResidentDetailsPage = () => {
       <div className="main">
         <div className="gradient" />
         <div className="mt-5 border-3 border-red-500">
-          <h2>Resident Details</h2>
+          <h2 className="mb-2">Resident Details</h2>
           <img src={resident.image} alt={resident.name} />
           <p>Name: {resident.name}</p>
           <p>Status: {resident.status}</p>
-          {/* Add any other details you want to display */}
         </div>
       </div>
     </>
