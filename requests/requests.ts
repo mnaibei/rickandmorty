@@ -1,10 +1,12 @@
 import axios from "axios";
 
+// Defining interfaces for Location and Resident data
 export interface Location {
   id: number;
   name: string;
   type: string;
   residents: Resident[];
+  matchingResidents?: Resident[];
 }
 
 export interface Resident {
@@ -15,6 +17,7 @@ export interface Resident {
   episode: string;
 }
 
+// Function to fetch locations asynchronously
 export const fetchLocations = async (): Promise<Location[]> => {
   try {
     const response = await axios.get(
@@ -23,12 +26,15 @@ export const fetchLocations = async (): Promise<Location[]> => {
     const locationsData = response.data.results;
     const locationsWithResidents = await Promise.all(
       locationsData.map(async (location: any) => {
+        // Process each resident of the location
         const residents = await Promise.all(
+          //Fetch data to populate the resident object
           location.residents.map(async (residentUrl: string) => {
             const residentResponse = await axios.get(residentUrl);
             const episodeUrl = residentResponse.data.episode[0];
             const episodeResponse = await axios.get(episodeUrl);
             const episodeName = episodeResponse.data.name;
+            // Create a Resident object with extracted data
             return {
               id: residentResponse.data.id,
               name: residentResponse.data.name,
@@ -39,6 +45,7 @@ export const fetchLocations = async (): Promise<Location[]> => {
           })
         );
 
+        // Create a Location object with processed resident data
         return {
           id: location.id,
           name: location.name,
