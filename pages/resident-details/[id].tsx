@@ -30,8 +30,6 @@ const ResidentDetailsPage = () => {
     }
   }, [router.query]);
 
-  console.log(resident);
-
   const handleNotesChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNotes(event.target.value);
   };
@@ -60,14 +58,14 @@ const ResidentDetailsPage = () => {
         <Nav />
       </div>
       <div className="  grid grid-cols-2 w-3/4 h-full self-center gap-4 max-sm:grid-cols-1 max-sm:w-fit">
-        <div className="mt-5 border-3 flex flex-col items-center">
+        <div className="mt-5 border-3 flex flex-col items-center border-2 border-black p-2">
           <h2 className="mb-2 font-extrabold">Resident Details</h2>
           <img
             src={resident.image}
             alt={resident.name}
-            className="border-2 border-green-500"
+            className="border-2 border-green-500 w-3/4 h-3/4"
           />
-          <div className="info mt-2 grid grid-cols-2 gap-x-4 p-2 max-sm:gap-x-2">
+          <div className="info mt-2 grid grid-cols-2 gap-x-4 p-2 max-sm:gap-x-2 w-3/4">
             <p>Name: {resident.name}</p>
             <p>Status: {resident.status}</p>
             <p>Species: {resident.species}</p>
