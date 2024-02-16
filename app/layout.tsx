@@ -2,8 +2,8 @@ import Nav from "@components/Nav";
 import "@styles/globals.css";
 
 export const metadata = {
-  title: "Prompt finder",
-  description: "Find the right prompt for your writing",
+  title: "Rick and Morty API ",
+  description: "Rick and Morty API using Next.js",
 };
 
 export default function RootLayout({
