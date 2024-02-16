@@ -41,33 +41,39 @@ const Home = () => {
 
   return (
     <>
-      <div className="search w-full  flex justify-center items-center">
+      <div className="search w-full  flex justify-center items-center max-sm:w-full">
         <input
           type="text"
-          className="w-1/2 p-2 "
+          className="w-1/2 p-2 max-sm:w-full"
           placeholder="Search..."
           value={searchTerm}
           onChange={handleSearch}
         />
       </div>
 
-      <div className="w-full mt-5 border-3 border-red-500">
-        <ul className="flex border-2 border-red-500 w-full flex-col gap-4">
+      <div className="w-full mt-5">
+        <ul className="flex w-full flex-col gap-5">
           {filteredLocations.map((location) => (
-            <li
-              key={location.id}
-              className="border-2 border-green-500 flex flex-col">
-              <h2>{location.name}</h2>
+            <li key={location.id} className=" flex flex-col p-4">
+              <h2 className="font-extrabold">{location.name}</h2>
               <p>Type: {location.type}</p>
               <p>Residents: {location.residents.length}</p>
-              <ul className="border-2 border-red-600 grid grid-cols-4 gap-4">
+              <ul className="grid grid-cols-4 gap-4 max-sm:grid-cols-1 mt-2">
                 {location.residents.map((resident) => (
-                  <Link href={`/resident-details/${resident.id}`}>
+                  <Link
+                    href={`/resident-details/${resident.id}`}
+                    className="border-2 border-black flex flex-col items-center justify-center h-fit">
                     <li key={resident.id}>
-                      <img src={resident.image} alt={resident.name} />{" "}
-                      <p>Name: {resident.name}</p>
-                      <p>Status: {resident.status}</p>
-                      <p>Episode: {resident.episode}</p>{" "}
+                      <img
+                        src={resident.image}
+                        alt={resident.name}
+                        className="h-fit w-fit max-sm:w-full"
+                      />{" "}
+                      <div className="info p-2">
+                        <p>Name: {resident.name}</p>
+                        <p>Status: {resident.status}</p>
+                        <p>Episode: {resident.episode}</p>{" "}
+                      </div>
                     </li>
                   </Link>
                 ))}
