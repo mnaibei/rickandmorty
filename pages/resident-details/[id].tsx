@@ -8,15 +8,21 @@ import "@styles/globals.css";
 const ResidentDetailsPage = () => {
   const router = useRouter();
   const [resident, setResident] = useState<any>(null);
+  const [notes, setNotes] = useState<string>("");
+  const [allNotes, setAllNotes] = useState<string[]>([]);
 
   useEffect(() => {
     const { id } = router.query;
-    console.log("id", id);
     if (id) {
       axios
         .get(`https://rickandmortyapi.com/api/character/${id}`)
         .then((response) => {
           setResident(response.data);
+          const storedNotes = localStorage.getItem(`resident_notes_${id}`);
+          if (storedNotes) {
+            setAllNotes(JSON.parse(storedNotes));
+            setNotes("");
+          }
         })
         .catch((error) => {
           console.error("Error fetching resident details:", error);
@@ -24,20 +30,35 @@ const ResidentDetailsPage = () => {
     }
   }, [router.query]);
 
-  console.log("resident", resident);
+  const handleNotesChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setNotes(event.target.value);
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const { id } = router.query;
+    if (id) {
+      const updatedNotes = [...allNotes, notes];
+      localStorage.setItem(
+        `resident_notes_${id}`,
+        JSON.stringify(updatedNotes)
+      );
+      setAllNotes(updatedNotes);
+      setNotes("");
+    }
+  };
 
   if (!resident) {
     return <div>Loading...</div>;
   }
 
   return (
-    <>
-      <div className="border-2 border-red-500 h-14 pl-3 pr-3">
+    <div className=" flex flex-col ">
+      <div className="border-2 border-yellow-500 h-20 w-3/4 pl-3 pr-3 self-center mb-5">
         <Nav />
       </div>
-      <div className="main">
-        <div className="gradient" />
-        <div className="mt-5 border-3 border-red-500">
+      <div className="border-2 border-red-500  grid grid-cols-2 w-3/4 self-center gap-4 ">
+        <div className="mt-5 border-3 flex flex-col items-center">
           <h2 className="mb-2">Resident Details</h2>
           <img src={resident.image} alt={resident.name} />
           <p>Name: {resident.name}</p>
@@ -47,8 +68,34 @@ const ResidentDetailsPage = () => {
           <p>Location: {resident.location.name}</p>
           <p>Origin: {resident.origin.name}</p>
         </div>
+        <div className="note-section border-2 flex flex-col gap-4 border-green-500">
+          <div>
+            <h3>Previous Notes:</h3>
+            <div className=" flex flex-col items-left mt-3 border-2 border-blue-500">
+              <ul>
+                {allNotes.map((note, index) => (
+                  <li key={index}>{note}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="notes">Add Note:</label>
+            <textarea
+              id="notes"
+              value={notes}
+              onChange={handleNotesChange}
+              className="w-full border-2 border-gray-400 rounded p-2 mt-2"
+            />
+            <button
+              type="submit"
+              className="bg-blue-500 text-white px-4 py-2 mt-2">
+              Save Note
+            </button>
+          </form>
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 
