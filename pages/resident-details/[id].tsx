@@ -24,6 +24,8 @@ const ResidentDetailsPage = () => {
     }
   }, [router.query]);
 
+  console.log("resident", resident);
+
   if (!resident) {
     return <div>Loading...</div>;
   }
@@ -40,6 +42,10 @@ const ResidentDetailsPage = () => {
           <img src={resident.image} alt={resident.name} />
           <p>Name: {resident.name}</p>
           <p>Status: {resident.status}</p>
+          <p>Species: {resident.species}</p>
+          <p>Gender: {resident.gender}</p>
+          <p>Location: {resident.location.name}</p>
+          <p>Origin: {resident.origin.name}</p>
         </div>
       </div>
     </>
