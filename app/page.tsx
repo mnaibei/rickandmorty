@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { fetchLocations, Location } from "@requests/requests";
+import Link from "next/link";
 
 const Home = () => {
   const [locations, setLocations] = useState<Location[]>([]);
@@ -61,12 +62,14 @@ const Home = () => {
               <p>Residents: {location.residents.length}</p>
               <ul className="border-2 border-red-600 grid grid-cols-4 gap-4">
                 {location.residents.map((resident) => (
-                  <li key={resident.id}>
-                    <img src={resident.image} alt={resident.name} />{" "}
-                    <p>Name: {resident.name}</p>
-                    <p>Status: {resident.status}</p>
-                    <p>Episode: {resident.episode}</p>{" "}
-                  </li>
+                  <Link href={`/resident-details/${resident.id}`}>
+                    <li key={resident.id}>
+                      <img src={resident.image} alt={resident.name} />{" "}
+                      <p>Name: {resident.name}</p>
+                      <p>Status: {resident.status}</p>
+                      <p>Episode: {resident.episode}</p>{" "}
+                    </li>
+                  </Link>
                 ))}
               </ul>
             </li>
