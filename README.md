@@ -1,4 +1,9 @@
-# Rick and Morty Characters App
+<div style="display: flex; flex-direction:row-reverse;justify-content: left;">
+<div style="display:flex;">
+    <img src="./public/assets/images/rick.svg" alt="rick" width="50" height="40"/>
+    <h1>Rick and Morty Characters App</h1>
+</div>
+</div>
 
 ## Description
 
@@ -80,6 +85,8 @@ yarn dev
 ```
 
 6. Open your web browser and go to `http://localhost:3000` to view the app.
+
+7. View Live Demo [here](https://rickandmorty-pi-topaz.vercel.app/)
 
 ## Future Considerations
 
